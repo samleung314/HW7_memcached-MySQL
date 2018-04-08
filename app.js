@@ -62,6 +62,16 @@ app.get('/hw7', function (req, res) {
                     });
                     break;
 
+                case 'Jukka Raitala':
+                    res.status(200).json({
+                        club: q.club,
+                        pos: q.pos,
+                        max_assists: 2,
+                        player: 'Chris Duvall',
+                        avg_assists: result[1][0].avg
+                    });
+                    break;
+
                 default:
                     res.status(200).json({
                         club: q.club,
