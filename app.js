@@ -16,7 +16,8 @@ var con = mysql.createConnection({
     user: 'root',
     password: '',
     database: 'hw7',
-    insecureAuth: true
+    insecureAuth: true,
+    multipleStatements: true
 });
 
 ///hw7?club=HOU&pos=M
@@ -27,19 +28,25 @@ app.get('/hw7', function (req, res) {
     console.log("POS: " + q.pos);
 
     con.query(
-        'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club="' + q.club + '" AND pos="' + q.pos +
-        '" GROUP BY player, club, a ORDER BY a DESC LIMIT 1',
+        'SELECT player, club, pos, a FROM assists ' + 
+        'WHERE club="' + q.club + '" AND pos="' + q.pos +
+        '" ORDER BY a DESC LIMIT 1;' +
+
+        'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' + 
+        'WHERE club="' + q.club + '" AND pos="' + q.pos + '") TMP'
+        , [1,2],
 
         function (err, result, fields) {
             if (err) throw err;
-            console.log(result);
+            console.log(result[0]);
+            console.log(result[1]);
 
             res.status(200).json({
                 club: q.club,
                 pos: q.pos,
-                max_assists: result[0].a,
-                player: result[0].player,
-                avg_assists: result[0].avg
+                max_assists: result[0][0].a,
+                player: result[0][0].player,
+                avg_assists: result[1][0].avg
             });
         });
 })
@@ -66,3 +73,5 @@ module.exports = app;
 // )
 
 //load data local infile 'assists.csv' into table assists fields terminated by ',' enclosed by '"' lines terminated by '\n' IGNORE 1 LINES (player, club, pos, gp, gs, a, gwa, hma, rda, a90);
+
+// SELECT player, club, pos, a FROM assists WHERE club='POR' AND pos='M-F' ORDER BY a DESC LIMIT 1;
