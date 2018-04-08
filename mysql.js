@@ -11,7 +11,12 @@ var con = mysql.createConnection({
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected to MySQL!");
-    con.query("SELECT * FROM assists", function (err, result, fields) {
+
+    con.query(
+        'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club=' + '"HOU"' + ' AND pos=' + '"M"' +
+        ' ORDER BY a DESC LIMIT 1', 
+    
+    function (err, result, fields) {
         if (err) throw err;
         console.log(result);
     });
