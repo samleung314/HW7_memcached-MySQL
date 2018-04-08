@@ -30,7 +30,7 @@ app.get('/hw7', function (req, res) {
     con.query(
         'SELECT player, club, pos, gp, a FROM assists ' + 
         'WHERE club="' + q.club + '" AND pos="' + q.pos +
-        '" ORDER BY a DESC. gp DESC LIMIT 1;' +
+        '" ORDER BY a DESC, gp DESC LIMIT 1;' +
 
         'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' + 
         'WHERE club="' + q.club + '" AND pos="' + q.pos + '") TMP'
