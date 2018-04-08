@@ -12,6 +12,14 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var con = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'hw7',
+    insecureAuth: true
+});
+
 ///hw7?club=HOU&pos=M
 app.get('/hw7', function (req, res) {
     var q = url.parse(req.url, true).query;
