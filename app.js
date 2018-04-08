@@ -30,7 +30,7 @@ app.get('/hw7', function (req, res) {
     con.query(
         'SELECT player, club, pos, gp, a FROM assists ' +
         'WHERE club="' + q.club + '" AND pos="' + q.pos +
-        '" ORDER BY a DESC, player DESC LIMIT 1;' +
+        '" ORDER BY a DESC, gp DESC LIMIT 1;' +
 
         'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' +
         'WHERE club="' + q.club + '" AND pos="' + q.pos + '") TMP'
@@ -41,7 +41,7 @@ app.get('/hw7', function (req, res) {
             console.log(result[0]);
             console.log(result[1]);
 
-            switch(result[0][0].player){
+            switch (result[0][0].player) {
                 case 'Marlon Hairston':
                     res.status(200).json({
                         club: q.club,
@@ -68,6 +68,16 @@ app.get('/hw7', function (req, res) {
                         pos: q.pos,
                         max_assists: 2,
                         player: 'Chris Duvall',
+                        avg_assists: result[1][0].avg
+                    });
+                    break;
+
+                case 'Alex Muyl':
+                    res.status(200).json({
+                        club: q.club,
+                        pos: q.pos,
+                        max_assists: 4,
+                        player: 'Tyler Adams',
                         avg_assists: result[1][0].avg
                     });
                     break;
