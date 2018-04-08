@@ -27,8 +27,8 @@ app.get('/hw7', function (req, res) {
     console.log("POS: " + q.pos);
 
     con.query(
-        'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club=' + '"HOU"' + ' AND pos=' + '"M"' +
-        ' GROUP BY player ORDER BY a DESC LIMIT 1 ',
+        'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club="' + q.club + '" AND pos="' + q.pos +
+        '" GROUP BY club ORDER BY a DESC LIMIT 1 ',
 
         function (err, result, fields) {
             if (err) throw err;
@@ -37,9 +37,9 @@ app.get('/hw7', function (req, res) {
             res.status(200).json({
                 club: q.club,
                 pos: q.pos,
-                max_assists: result.a,
-                player: result.player,
-                avg_assists: result.avg
+                max_assists: result[0].a,
+                player: result[0].player,
+                avg_assists: result[0].avg
             });
         });
 })
