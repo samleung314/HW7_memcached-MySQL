@@ -3,8 +3,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var url = require('url');
-
-var mysql = require('./mysql');
+var mysql = require('mysql');
 
 //create express app
 var app = express();
