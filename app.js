@@ -28,9 +28,9 @@ app.get('/hw7', function (req, res) {
     console.log("POS: " + q.pos);
 
     con.query(
-        'SELECT player, club, pos, a FROM assists ' + 
+        'SELECT player, club, pos, gp, a FROM assists ' + 
         'WHERE club="' + q.club + '" AND pos="' + q.pos +
-        '" ORDER BY a DESC LIMIT 1;' +
+        '" ORDER BY a DESC. gp DESC LIMIT 1;' +
 
         'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' + 
         'WHERE club="' + q.club + '" AND pos="' + q.pos + '") TMP'
@@ -59,7 +59,7 @@ var server = app.listen(port, function () {
 module.exports = app;
 
 // CREATE TABLE assists (
-//     player VARCHAR(50) ,
+//     player VARCHAR(50) CHARACTER SET utf8,
 //     club VARCHAR(50) ,
 //     pos VARCHAR(50) ,
 //     gp INT ,
@@ -72,6 +72,12 @@ module.exports = app;
 //     PRIMARY KEY (player)
 // )
 
-//load data local infile 'assists.csv' into table assists fields terminated by ',' enclosed by '"' lines terminated by '\n' IGNORE 1 LINES (player, club, pos, gp, gs, a, gwa, hma, rda, a90);
+// LOAD DATA LOCAL INFILE 'assists.csv'
+// INTO TABLE assists 
+// CHARACTER SET UTF8
+// FIELDS TERMINATED BY ',' 
+// ENCLOSED  BY '"' 
+// LINES TERMINATED  BY '\n'
+// IGNORE 1 LINES (player, club, pos, gp, gs, a, gwa, hma, rda, a90);
 
 // SELECT player, club, pos, a FROM assists WHERE club='POR' AND pos='M-F' ORDER BY a DESC LIMIT 1;
