@@ -28,7 +28,7 @@ app.get('/hw7', function (req, res) {
 
     con.query(
         'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club="' + q.club + '" AND pos="' + q.pos +
-        '" GROUP BY club ORDER BY a DESC LIMIT 1 ',
+        '" GROUP BY player, club, a ORDER BY a DESC LIMIT 1',
 
         function (err, result, fields) {
             if (err) throw err;
