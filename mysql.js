@@ -5,12 +5,17 @@ port = process.env.PORT || 4205;
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: ""
+    password: "",
+    database: "hw7"
 });
 
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected to MySQL!");
+    con.query("SELECT * FROM assists", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+    });
 });
 
 module.exports = con;
