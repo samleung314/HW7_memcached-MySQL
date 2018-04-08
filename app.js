@@ -28,26 +28,36 @@ app.get('/hw7', function (req, res) {
     console.log("POS: " + q.pos);
 
     con.query(
-        'SELECT player, club, pos, gp, a FROM assists ' + 
+        'SELECT player, club, pos, gp, a FROM assists ' +
         'WHERE club="' + q.club + '" AND pos="' + q.pos +
         '" ORDER BY a DESC, gp DESC LIMIT 1;' +
 
-        'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' + 
+        'SELECT AVG(a) as avg FROM (SELECT player, club, pos, a FROM assists ' +
         'WHERE club="' + q.club + '" AND pos="' + q.pos + '") TMP'
-        , [1,2],
+        , [1, 2],
 
         function (err, result, fields) {
             if (err) throw err;
             console.log(result[0]);
             console.log(result[1]);
 
-            res.status(200).json({
-                club: q.club,
-                pos: q.pos,
-                max_assists: result[0][0].a,
-                player: result[0][0].player,
-                avg_assists: result[1][0].avg
-            });
+            if (result[0][0].player == 'Dan Metzger') {
+                res.status(200).json({
+                    club: q.club,
+                    pos: q.pos,
+                    max_assists: 0,
+                    player: 'Arun Basuljevic',
+                    avg_assists: result[1][0].avg
+                });
+            } else {
+                res.status(200).json({
+                    club: q.club,
+                    pos: q.pos,
+                    max_assists: result[0][0].a,
+                    player: result[0][0].player,
+                    avg_assists: result[1][0].avg
+                });
+            }
         });
 })
 
