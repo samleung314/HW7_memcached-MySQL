@@ -14,7 +14,7 @@ con.connect(function (err) {
 
     con.query(
         'SELECT player, club, pos, a, AVG(a) as avg FROM assists WHERE club=' + '"HOU"' + ' AND pos=' + '"M"' +
-        ' ORDER BY a DESC LIMIT 1', 
+        ' GROUP BY player ORDER BY a DESC LIMIT 1 ',
     
     function (err, result, fields) {
         if (err) throw err;
