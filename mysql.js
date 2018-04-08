@@ -13,7 +13,7 @@ con.connect(function (err) {
     console.log("Connected to MySQL!");
 });
 
-module.exports = connection;
+module.exports = con;
 
 // CREATE TABLE assists (
 //     player VARCHAR(50) ,
