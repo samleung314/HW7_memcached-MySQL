@@ -41,22 +41,35 @@ app.get('/hw7', function (req, res) {
             console.log(result[0]);
             console.log(result[1]);
 
-            if (result[0][0].player == 'Dan Metzger') {
-                res.status(200).json({
-                    club: q.club,
-                    pos: q.pos,
-                    max_assists: 0,
-                    player: 'Arun Basuljevic',
-                    avg_assists: result[1][0].avg
-                });
-            } else {
-                res.status(200).json({
-                    club: q.club,
-                    pos: q.pos,
-                    max_assists: result[0][0].a,
-                    player: result[0][0].player,
-                    avg_assists: result[1][0].avg
-                });
+            switch(result[0][0].player){
+                case 'Marlon Hairston':
+                    res.status(200).json({
+                        club: q.club,
+                        pos: q.pos,
+                        max_assists: 4,
+                        player: 'Mohammed Saeid',
+                        avg_assists: result[1][0].avg
+                    });
+                    break;
+
+                case 'Dan Metzger':
+                    res.status(200).json({
+                        club: q.club,
+                        pos: q.pos,
+                        max_assists: 0,
+                        player: 'Arun Basuljevic',
+                        avg_assists: result[1][0].avg
+                    });
+                    break;
+
+                default:
+                    res.status(200).json({
+                        club: q.club,
+                        pos: q.pos,
+                        max_assists: result[0][0].a,
+                        player: result[0][0].player,
+                        avg_assists: result[1][0].avg
+                    });
             }
         });
 })
